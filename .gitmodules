@@ -6,4 +6,4 @@
 	url = https://github.com/mavlink/c_library_v2.git
 [submodule "src/ping"]
 	path = src/ping
-	url = https://github.com/bluerobotics/ping
+	url = https://github.com/patrickelectric/ping
