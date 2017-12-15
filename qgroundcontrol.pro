@@ -19,6 +19,8 @@ message(Qt version $$[QT_VERSION])
 
 include(QGCCommon.pri)
 
+include($$PWD/src/ping/PingViewer.pri)
+
 TARGET   = QGroundControl
 TEMPLATE = app
 QGCROOT  = $$PWD
