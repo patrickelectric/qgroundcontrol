@@ -324,7 +324,7 @@ VideoReceiver::start()
 
         // Run audio
         GError *error = NULL;
-        GstElement* audiopipeline = gst_parse_launch("udpsrc port=5601 ! application/x-rtp, media=audio, clock-rate=44100, encoding-name=L16, encoding-params=1, channels=1, payload=96 ! rtpL16depay ! audioconvert ! queue ! autoaudiosink sync=false", &error);
+        GstElement* audiopipeline = gst_parse_launch("udpsrc port=5601 ! application/x-rtp, media=audio, clock-rate=44100, encoding-name=L16, encoding-params=1, channels=1, payload=96 ! rtpL16depay ! volume ! audioconvert ! queue ! autoaudiosink sync=false", &error);
         gst_element_set_state(audiopipeline, GST_STATE_PLAYING);
 
     } while(0);
