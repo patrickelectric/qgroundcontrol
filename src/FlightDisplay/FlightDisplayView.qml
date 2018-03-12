@@ -353,6 +353,8 @@ QGCView {
                 setPipVisibility(!state)
             }
             onPopup: {
+                width = width+1
+                _pipSize = width+1
                 videoWindow.visible = true
                 _flightVideo.state = "popup"
             }
