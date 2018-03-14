@@ -51,6 +51,8 @@
 #include "AppMessages.h"
 #endif
 
+#include "pingmain.h"
+
 #ifndef NO_SERIAL_LINK
 #include "SerialLink.h"
 #endif
@@ -69,7 +71,8 @@ enum DockWidgetTypes {
     ONBOARD_FILES,
     DEPRECATED_WIDGET,
     HIL_CONFIG,
-    ANALYZE
+    ANALYZE,
+    PING,
 };
 
 static const char *rgDockWidgetNames[] = {
@@ -78,7 +81,8 @@ static const char *rgDockWidgetNames[] = {
     "Onboard Files",
     "Deprecated Widget",
     "HIL Config",
-    "Analyze"
+    "Analyze",
+    "Ping",
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))
@@ -351,6 +355,9 @@ bool MainWindow::_createInnerDockWidget(const QString& widgetName)
                 break;
             case ANALYZE:
                 widget = new Linecharts(widgetName, action, _mavLinkDecoderInstance(), this);
+                break;
+            case PING:
+                pingMain();
                 break;
         }
         if(widget) {
