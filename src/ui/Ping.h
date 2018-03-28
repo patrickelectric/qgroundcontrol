@@ -37,8 +37,7 @@ public:
         #endif
 
         qDebug() << (binPath + executable);
-        process->setProgram(binPath + executable);
-        process->startDetached();
+        process->startDetached(binPath + executable);
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
         });
