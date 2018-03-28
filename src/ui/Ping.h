@@ -16,7 +16,9 @@ public:
         _visible = false;
         qDebug() << "PING!";
 
-        //process->setEnvironment(QProcess::systemEnvironment());
+        qDebug() << "envo" << process->processEnvironment().keys();
+        process->setEnvironment(QStringList());
+        qDebug() << "envo2" << process->processEnvironment().keys();
         qDebug() << "env" << QProcess::systemEnvironment();
         process->setProcessChannelMode(QProcess::MergedChannels);
 
