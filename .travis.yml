@@ -199,6 +199,9 @@ before_deploy:
   # create linux appimage
   - cd ${TRAVIS_BUILD_DIR}
   - if [[ "${SPEC}" = "linux-g++-64" && "${CONFIG}" = "installer" ]]; then
+        wget -O KDevelop.AppImage https://download.kde.org/stable/kdevelop/5.2.1/bin/linux/KDevelop-5.2.1-x86_64.AppImage;
+        chmod +x KDevelop.AppImage;
+        mv KDevelop.AppImage ${SHADOW_BUILD_DIR}/release/;
         ./deploy/create_linux_appimage.sh ${TRAVIS_BUILD_DIR} ${SHADOW_BUILD_DIR}/release ${SHADOW_BUILD_DIR}/release/package;
     fi
 

@@ -20,7 +20,8 @@ public:
 
         process->setEnvironment(QProcess::systemEnvironment());
         process->setProcessChannelMode(QProcess::MergedChannels);
-        process->start("ls");
+
+        process->start("KDevelop.AppImage");
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
         });
