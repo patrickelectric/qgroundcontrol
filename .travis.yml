@@ -17,10 +17,6 @@ matrix:
           dist: trusty
           env: SPEC=linux-g++-64 CONFIG=installer
           sudo: required
-        - os: linux
-          dist: trusty
-          env: SPEC=linux-g++-64 CONFIG=debug
-          sudo: required
         - os: android
           language: android
           env: SPEC=android-g++ CONFIG=installer
@@ -205,69 +201,15 @@ before_deploy:
         ./deploy/create_linux_appimage.sh ${TRAVIS_BUILD_DIR} ${SHADOW_BUILD_DIR}/release ${SHADOW_BUILD_DIR}/release/package;
     fi
 
-deploy:
-  # deploy installers to s3 builds/ if on a branch
-  - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
-    secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
-    local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: builds/${TRAVIS_BRANCH}
-    acl: public_read
-    region: us-west-2
-    skip_cleanup: true
-    on:
-      all_branches: true
-      condition: $CONFIG = installer
-
-  # deploy tagged installers to s3 latest/
-  - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
-    secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
-    local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: latest
-    acl: public_read
-    region: us-west-2
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: $CONFIG = installer
-
-  # deploy tagged installers to s3 version folder
-  - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
-    secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
-    local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: ${TRAVIS_BRANCH}
-    acl: public_read
-    region: us-west-2
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: $CONFIG = installer
 
   # deploy installers to Github releases if on a tag
   - provider: releases
     api-key:
-      secure: K/Zqr/FCC7QvzFxYvBtCinPkacQq2ubJ2qm982+38Zf/KjibVOF1dEbVdrGZmII6Tg5DaQzNXGYkg5PvYmJgT9xRsqeQjeYIUYqYZpAt+HYWA38AVfMU8jip/1P1wmwqD469nzJOBBa8yfsMs6Ca7tBaNl/zTxCRGnAgEzqtkdQ=
+      secure: ${github_token}
     file_glob: true
     file:
       - ${SHADOW_BUILD_DIR}/release/package/qgroundcontrol.*
       - ${SHADOW_BUILD_DIR}/release/package/QGroundControl.*
     skip_cleanup: true
     on:
-      tags: true
       condition: $CONFIG = installer
-
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/60b033428ae9dc715662
-    on_success: change
-    on_failure: always
-    on_start: never
