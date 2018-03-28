@@ -32,7 +32,7 @@ public:
             #if Q_OS_WIN
                 static QString executable = "/pingviewer.exe";
             #else // Linux
-                static QString executable = "/pingviewer.AppImage";
+                static QString executable = "/ping/pingviewer.AppImage";
             #endif
         #endif
 

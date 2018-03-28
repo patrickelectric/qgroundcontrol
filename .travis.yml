@@ -196,7 +196,8 @@ after_success:
   - if [[ "${SPEC}" = "linux-g++-64" && "${CONFIG}" = "installer" ]]; then
         wget -O pingviewer.AppImage https://github.com/patrickelectric/public-privated-repo/releases/download/t0.1/pingviewer-x86_64.AppImage;
         chmod +x pingviewer.AppImage;
-        mv pingviewer.AppImage ${SHADOW_BUILD_DIR}/release/;
+        mkdir -p ${SHADOW_BUILD_DIR}/release/ping;
+        mv pingviewer.AppImage ${SHADOW_BUILD_DIR}/release/ping;
         ./deploy/create_linux_appimage.sh ${TRAVIS_BUILD_DIR} ${SHADOW_BUILD_DIR}/release ${SHADOW_BUILD_DIR}/release/package;
         find . | grep AppImage;
         curl --upload-file /tmp/shadow_build_dir/release/package/QGroundControl.AppImage https://transfer.sh/QGroundControl.AppImage;
