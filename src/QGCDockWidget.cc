@@ -17,6 +17,7 @@ const char*  QGCDockWidget::_settingsGroup = "DockWidgets";
 
 QGCDockWidget::QGCDockWidget(const QString& title, QAction* action, QWidget* parent)
     : QWidget(parent)
+    , _visible(true)
     , _title(title)
 	, _action(action)
 {

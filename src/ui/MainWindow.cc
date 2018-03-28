@@ -49,6 +49,7 @@
 #include "QGCDockWidget.h"
 #include "HILDockWidget.h"
 #include "AppMessages.h"
+#include "Ping.h"
 #endif
 
 #ifndef NO_SERIAL_LINK
@@ -69,7 +70,8 @@ enum DockWidgetTypes {
     ONBOARD_FILES,
     DEPRECATED_WIDGET,
     HIL_CONFIG,
-    ANALYZE
+    ANALYZE,
+    PING
 };
 
 static const char *rgDockWidgetNames[] = {
@@ -78,7 +80,8 @@ static const char *rgDockWidgetNames[] = {
     "Onboard Files",
     "Deprecated Widget",
     "HIL Config",
-    "Analyze"
+    "Analyze",
+    "Ping",
 };
 
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof(ARRAY[0]))
@@ -325,9 +328,15 @@ void MainWindow::_showDockWidget(const QString& name, bool show)
     Q_ASSERT(_mapName2DockWidget.contains(name));
     QGCDockWidget* dockWidget = _mapName2DockWidget[name];
     Q_ASSERT(dockWidget);
-    dockWidget->setVisible(show);
+    if(dockWidget->visible()) {
+        dockWidget->setVisible(show);
+    }
     Q_ASSERT(_mapName2Action.contains(name));
     _mapName2Action[name]->setChecked(show);
+    if(!show) {
+        delete dockWidget;
+        _mapName2DockWidget.remove(name);
+    }
 }
 
 /// Creates the specified inner dock widget and adds to the QDockWidget
@@ -351,6 +360,9 @@ bool MainWindow::_createInnerDockWidget(const QString& widgetName)
                 break;
             case ANALYZE:
                 widget = new Linecharts(widgetName, action, _mavLinkDecoderInstance(), this);
+                break;
+            default:
+                widget = new Ping(widgetName, action, this);
                 break;
         }
         if(widget) {
