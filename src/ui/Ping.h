@@ -16,7 +16,8 @@ public:
         _visible = false;
         qDebug() << "PING!";
 
-        process->setEnvironment(QProcess::systemEnvironment());
+        //process->setEnvironment(QProcess::systemEnvironment());
+        qDebug() << "env" << QProcess::systemEnvironment();
         process->setProcessChannelMode(QProcess::MergedChannels);
 
         #ifdef Q_OS_OSX
