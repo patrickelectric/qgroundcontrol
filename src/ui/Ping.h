@@ -1,10 +1,8 @@
 #pragma once
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QProcess>
-#include <QShowEvent>
-#include <QWidget>
-#include <QWindow>
 
 #include "QGCDockWidget.h"
 
@@ -21,7 +19,21 @@ public:
         process->setEnvironment(QProcess::systemEnvironment());
         process->setProcessChannelMode(QProcess::MergedChannels);
 
-        process->start("KDevelop.AppImage");
+        #ifdef Q_OS_OSX
+            // macdeployqt file do not put stm32flash binary in the same folder of pingviewer
+            static QString binPath = QCoreApplication::applicationDirPath() + "/../..";
+            static QString executable = "/pingviewer.dmg";
+        #else
+            static QString binPath = QCoreApplication::applicationDirPath();
+            #if Q_OS_WIN
+                static QString executable = "/pingviewer.exe";
+            #else // Linux
+                static QString executable = "/pingviewer.AppImage";
+            #endif
+        #endif
+
+        qDebug() << (binPath + executable);
+        process->start(binPath + executable);
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
         });
@@ -29,6 +41,7 @@ public:
 
     ~Ping()
     {
+        process->kill();
         qDebug() << "PONG!";
     }
 
