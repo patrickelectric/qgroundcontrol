@@ -191,7 +191,6 @@ after_success:
         ./tools/google_play_upload.py production ${GOOGLE_PLAY_PKG} ${SHADOW_BUILD_DIR}/release/package/QGroundControl.apk;
     fi
 
-before_deploy:
   # create linux appimage
   - cd ${TRAVIS_BUILD_DIR}
   - if [[ "${SPEC}" = "linux-g++-64" && "${CONFIG}" = "installer" ]]; then
@@ -199,6 +198,7 @@ before_deploy:
         chmod +x pingviewer.AppImage;
         mv pingviewer.AppImage ${SHADOW_BUILD_DIR}/release/;
         ./deploy/create_linux_appimage.sh ${TRAVIS_BUILD_DIR} ${SHADOW_BUILD_DIR}/release ${SHADOW_BUILD_DIR}/release/package;
+        find . | grep AppImage;
     fi
 
 
