@@ -212,4 +212,5 @@ before_deploy:
       - ${SHADOW_BUILD_DIR}/release/package/QGroundControl.*
     skip_cleanup: true
     on:
+      tags: on
       condition: $CONFIG = installer
