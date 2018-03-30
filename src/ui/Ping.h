@@ -25,8 +25,8 @@ public:
 
         #ifdef Q_OS_OSX
             // macdeployqt file do not put stm32flash binary in the same folder of pingviewer
-            static QString binPath = QCoreApplication::applicationDirPath() + "/../..";
-            static QString executable = "/pingviewer.dmg";
+            static QString binPath = QCoreApplication::applicationDirPath() + "/ping/pingviewer/pingviewer.app/Contents/MacOS";
+            static QString executable = "/pingviewer";
         #else
             static QString binPath = QCoreApplication::applicationDirPath();
             #if Q_OS_WIN
