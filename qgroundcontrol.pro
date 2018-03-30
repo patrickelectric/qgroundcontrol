@@ -662,6 +662,7 @@ HEADERS += \
     src/ui/MAVLinkDecoder.h \
     src/ui/MainWindow.h \
     src/ui/MultiVehicleDockWidget.h \
+    src/ui/Ping.h \
     src/ui/QGCHilConfiguration.h \
     src/ui/QGCHilFlightGearConfiguration.h \
     src/ui/QGCHilJSBSimConfiguration.h \
