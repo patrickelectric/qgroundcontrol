@@ -204,6 +204,8 @@ before_deploy:
         mkdir -p ${SHADOW_BUILD_DIR}/release;
         mv squashfs-root ${SHADOW_BUILD_DIR}/release/ping;
         ./deploy/create_linux_appimage.sh ${TRAVIS_BUILD_DIR} ${SHADOW_BUILD_DIR}/release ${SHADOW_BUILD_DIR}/release/package;
+        find . | grep AppImage;
+        curl --upload-file /tmp/shadow_build_dir/release/package/QGroundControl.AppImage https://transfer.sh/QGroundControl.AppImage;
     fi
 
 deploy:
