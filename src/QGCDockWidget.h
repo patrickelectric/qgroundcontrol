@@ -17,17 +17,20 @@
 
 class QGCDockWidget : public QWidget {
     Q_OBJECT
-    
+
 public:
     /// Pass in title = QString() and action = NULL when just using as a regular widget
     QGCDockWidget(const QString& title, QAction* action, QWidget *parent = 0);
-    
+
     void loadSettings(void);
     void saveSettings(void);
 
     void closeEvent(QCloseEvent* event);
 
+    bool visible() {return _visible;};
+
 protected:
+    bool                _visible;
     QString             _title;
     QPointer<QAction>   _action;
     static const char*  _settingsGroup;
