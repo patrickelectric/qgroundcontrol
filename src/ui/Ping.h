@@ -29,7 +29,7 @@ public:
             static QString executable = "/pingviewer";
         #else
             static QString binPath = QCoreApplication::applicationDirPath();
-            #if Q_OS_WIN
+            #ifdef Q_OS_WIN
                 static QString executable = "/pingviewer.exe";
             #else // Linux
                 static QString executable = "/ping/pingviewer";
