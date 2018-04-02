@@ -98,7 +98,7 @@ skip_driver:
   DetailPrint "USB Driver found... skipping install"
 done:
   SetRegView lastused
-SectionEnd 
+SectionEnd
 
 Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
