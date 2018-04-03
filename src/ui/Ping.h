@@ -37,11 +37,20 @@ public:
             #endif
         #endif
 
-        qDebug() << QDir::toNativeSeparators(binPath + executable);
-        process->startDetached(QDir::toNativeSeparators(binPath + executable));
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
         });
+
+        connect(process, &QProcess::errorOccurred, this, [](QProcess::ProcessError error) {
+            qDebug() << "ProcessError:" << error;
+        });
+
+        connect(process, &QProcess::stateChanged, this, [](QProcess::ProcessState state) {
+            qDebug() << "StateChanged:" << state;
+        });
+
+        qDebug() << QDir::toNativeSeparators(binPath + executable);
+        process->startDetached(QDir::toNativeSeparators(binPath + executable));
     }
 
     ~Ping()
