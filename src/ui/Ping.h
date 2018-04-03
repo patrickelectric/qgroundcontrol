@@ -22,7 +22,7 @@ public:
         qDebug() << "envo2" << process->processEnvironment().keys();
         qDebug() << "env" << QProcess::systemEnvironment();
         process->setProcessChannelMode(QProcess::MergedChannels);
-        process->processEnvironment().clear();
+        qDebug() << "test";
 
         #ifdef Q_OS_OSX
             // macdeployqt file do not put stm32flash binary in the same folder of pingviewer
