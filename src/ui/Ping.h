@@ -30,14 +30,14 @@ public:
             static QString executable = "/pingviewer";
         #else
             static QString binPath = QCoreApplication::applicationDirPath();
-            #ifdef  Q_OS_WIN
-                static QString executable = "/pingviewer/deploy/pingviewer.exe";
+            #ifdef Q_OS_WIN
+                static QString executable = "\\pingviewer\\deploy\\pingviewer.exe";
             #else // Linux
                 static QString executable = "/ping/pingviewer";
             #endif
         #endif
 
-        qDebug() << (binPath + executable);
+        qDebug() << QDir::toNativeSeparators(binPath + executable);
         process->startDetached(QDir::toNativeSeparators(binPath + executable));
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
