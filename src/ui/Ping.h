@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
 #include <QProcess>
 
 #include "QGCDockWidget.h"
@@ -37,7 +38,7 @@ public:
         #endif
 
         qDebug() << (binPath + executable);
-        process->startDetached(binPath + executable);
+        process->startDetached(QDir::toNativeSeparators(binPath + executable));
         connect(process, &QProcess::readyReadStandardOutput, this, [this] {
             qDebug() << process->readAllStandardOutput();
         });
