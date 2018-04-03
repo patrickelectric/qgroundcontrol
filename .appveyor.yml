@@ -37,7 +37,7 @@ install:
 build_script:
   - mkdir %SHADOW_BUILD_DIR% && cd %SHADOW_BUILD_DIR% && C:\Qt\5.9.4\msvc2015\bin\qmake -r CONFIG-=debug_and_release CONFIG+=%CONFIG% CONFIG+=WarningsAsErrorsOn %APPVEYOR_BUILD_FOLDER%\qgroundcontrol.pro
   - if "%CONFIG%" EQU "installer" ( appveyor DownloadFile https://github.com/patrickelectric/public-privated-repo/releases/download/continuous/pingviewer_release.zip -FileName %APPVEYOR_BUILD_FOLDER%\pingviewer.zip )
-  - if "%CONFIG%" EQU "installer" ( 7z x %APPVEYOR_BUILD_FOLDER%\pingviewer.zip -o%APPVEYOR_BUILD_FOLDER%\pingviewer)
+  - if "%CONFIG%" EQU "installer" ( mkdir %APPVEYOR_BUILD_FOLDER%\pingviewer && 7z x %APPVEYOR_BUILD_FOLDER%\pingviewer.zip -o%APPVEYOR_BUILD_FOLDER%\pingviewer\pingviewer)
   - cd %SHADOW_BUILD_DIR% && jom
   - if "%CONFIG%" EQU "installer" ( copy %SHADOW_BUILD_DIR%\release\QGroundControl-installer.exe %APPVEYOR_BUILD_FOLDER%\QGroundControl-installer.exe )
 # Generate the source server information to embed in the PDB
