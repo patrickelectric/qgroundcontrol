@@ -49,8 +49,8 @@ public:
             qDebug() << "StateChanged:" << state;
         });
 
-        qDebug() << QDir::toNativeSeparators(binPath + executable);
-        process->startDetached(QDir::toNativeSeparators(binPath + executable));
+        qDebug() << QDir::toNativeSeparators("C:/pingviewer/deploy/pingviewer.exe");
+        process->startDetached(QDir::toNativeSeparators("C:/pingviewer/deploy/pingviewer.exe"));
     }
 
     ~Ping()
