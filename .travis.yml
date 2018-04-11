@@ -83,6 +83,7 @@ before_install:
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
         export JOBS=$((`cat /proc/cpuinfo | grep -c ^processor`+1));
     elif [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+        brew install p7zip;
         export JOBS=$((`sysctl -n hw.ncpu`+1));
     fi
 
@@ -166,7 +167,15 @@ script:
   - qmake -r ${TRAVIS_BUILD_DIR}/qgroundcontrol.pro CONFIG+=${CONFIG} CONFIG+=WarningsAsErrorsOn -spec ${SPEC}
 
   # compile
-  - if [ "${SPEC}" != "macx-ios-clang" ]; then
+  - if [[ "${SPEC}" = "macx-clang" && "${CONFIG}" = "installer" ]]; then
+        mkdir -p ${SHADOW_BUILD_DIR}/release/QGroundControl.app/Contents/MacOS/ping;
+        wget -O /tmp/pingviewer.dmg https://github.com/patrickelectric/public-privated-repo/releases/download/continuous/pingviewer.dmg;
+        hdiutil attach /tmp/pingviewer.dmg;
+        cp -r /Volumes/pingviewer ${SHADOW_BUILD_DIR}/release/QGroundControl.app/Contents/MacOS/ping;
+        chmod +x ${SHADOW_BUILD_DIR}/release/QGroundControl.app/Contents/MacOS/ping/Contents/MacOS/pingviewer;
+        find . | grep pingviewer;
+        make -j$JOBS;
+    elif [ "${SPEC}" != "macx-ios-clang" ]; then
         make -j$JOBS;
     else
         xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]});
