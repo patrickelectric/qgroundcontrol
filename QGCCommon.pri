@@ -63,12 +63,13 @@ linux {
         error("Unsuported Linux toolchain, only GCC 32- or 64-bit is supported")
     }
 } else : win32 {
+    message("Windows build")
     !contains(QMAKE_TARGET.arch, x86_64) {
         message($$QMAKE_TARGET.arch)
         error("Unsupported 32bits Windows toolchain, only Visual Studio 2017_64 is supported.")
     }
-    win32-msvc2017 {
-        message("Windows build")
+    // msvc 2017
+    equals(MSVC_VER, 15.0) {
         CONFIG += WindowsBuild
         DEFINES += __STDC_LIMIT_MACROS
         DEFINES += QGC_GST_TAISYNC_ENABLED
