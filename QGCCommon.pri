@@ -58,9 +58,19 @@ linux {
         CONFIG += WindowsBuild
         DEFINES += __STDC_LIMIT_MACROS
         DEFINES += QGC_GST_TAISYNC_ENABLED
-        DEFINES += QGC_GST_MICROHARD_ENABLED 
+        DEFINES += QGC_GST_MICROHARD_ENABLED
     } else {
-        error("Unsupported Windows toolchain, only Visual Studio 2015 is supported")
+        error("Unsupported Windows toolchain, only Visual Studio 2015/2017 is supported")
+    }
+} else : win64 {
+    win64-msvc2017 {
+        message("Windows build")
+        CONFIG += WindowsBuild
+        DEFINES += __STDC_LIMIT_MACROS
+        DEFINES += QGC_GST_TAISYNC_ENABLED
+        DEFINES += QGC_GST_MICROHARD_ENABLED
+    } else {
+        error("Unsupported Windows toolchain, only Visual Studio 2015/2017 is supported")
     }
 } else : macx {
     macx-clang | macx-llvm {
@@ -222,6 +232,9 @@ MacBuild | LinuxBuild {
 
 WindowsBuild {
     win32-msvc2015 {
+        QMAKE_CFLAGS -= -Zc:strictStrings
+        QMAKE_CXXFLAGS -= -Zc:strictStrings
+    } else:win64-msvc2017 {
         QMAKE_CFLAGS -= -Zc:strictStrings
         QMAKE_CXXFLAGS -= -Zc:strictStrings
     }
