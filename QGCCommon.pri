@@ -16,6 +16,16 @@
 # to allow us to easily modify suported build types in one place instead of duplicated throughout
 # the project file.
 
+message("The project contains the following files:")
+message("Headers:      " $$HEADERS)
+message("Sources:      " $$SOURCES)
+message("Resources:    " $$RESOURCES)
+message("QT:           " $$QT)
+message("Config:       " $$CONFIG)
+message("CXX flags:    " $$QMAKE_CXXFLAGS)
+message("L flags:      " $$QMAKE_LFLAGS)
+message("Compiler:     " $$QMAKE_COMPILER_DEFINES)
+
 linux {
     linux-g++ | linux-g++-64 | linux-g++-32 | linux-clang {
         message("Linux build")
