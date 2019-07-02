@@ -68,7 +68,7 @@ linux {
         message($$QMAKE_TARGET.arch)
         error("Unsupported 32bits Windows toolchain, only Visual Studio 2017_64 is supported.")
     }
-    // msvc 2017
+    # msvc 2017
     equals(MSVC_VER, 15.0) {
         CONFIG += WindowsBuild
         DEFINES += __STDC_LIMIT_MACROS
