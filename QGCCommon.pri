@@ -64,7 +64,8 @@ linux {
     }
 } else : win32 {
     !contains(QMAKE_TARGET.arch, x86_64) {
-        error("Unsupported Windows toolchain, only Visual Studio 2017_64 is supported")
+        message($$QMAKE_TARGET.arch)
+        error("Unsupported 32bits Windows toolchain, only Visual Studio 2017_64 is supported.")
     }
     win32-msvc2017 {
         message("Windows build")
@@ -73,7 +74,7 @@ linux {
         DEFINES += QGC_GST_TAISYNC_ENABLED
         DEFINES += QGC_GST_MICROHARD_ENABLED
     } else {
-        error("Unsupported Windows toolchain, only Visual Studio 2017_64 is supported")
+        error("Unsupported 64bits Windows toolchain, only Visual Studio 2017_64 is supported")
     }
 } else : macx {
     macx-clang | macx-llvm {
