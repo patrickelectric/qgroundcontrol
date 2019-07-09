@@ -223,7 +223,7 @@ DEFINES += _TTY_NOWARN_
 #
 
 MacBuild | LinuxBuild {
-    QMAKE_CXXFLAGS_WARN_ON += -Wall
+    #QMAKE_CXXFLAGS_WARN_ON += -Wall
     WarningsAsErrorsOn {
         #QMAKE_CXXFLAGS_WARN_ON += -Werror
     }
@@ -252,9 +252,9 @@ WindowsBuild {
         /wd4005 \   # silence warnings about macro redefinition
         /wd4290     # ignore exception specifications
 
-    WarningsAsErrorsOn {
-        QMAKE_CXXFLAGS_WARN_ON += /WX
-    }
+    #WarningsAsErrorsOn {
+        #QMAKE_CXXFLAGS_WARN_ON += /WX
+    #}
 }
 
 #
