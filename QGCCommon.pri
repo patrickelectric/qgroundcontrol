@@ -225,7 +225,7 @@ DEFINES += _TTY_NOWARN_
 MacBuild | LinuxBuild {
     QMAKE_CXXFLAGS_WARN_ON += -Wall
     WarningsAsErrorsOn {
-        QMAKE_CXXFLAGS_WARN_ON += -Werror
+        #QMAKE_CXXFLAGS_WARN_ON += -Werror
     }
     MacBuild {
         # Latest clang version has a buggy check for this which cause Qt headers to throw warnings on qmap.h
