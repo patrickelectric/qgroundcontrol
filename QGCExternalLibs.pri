@@ -124,6 +124,8 @@ MacBuild {
     LIBS += \
         -lSDL2main \
         -lSDL2
+
+    message("POTATOOOOOOOOO $$LIBS")
 }
 
 AndroidBuild {
