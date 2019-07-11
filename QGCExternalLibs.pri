@@ -117,9 +117,11 @@ MacBuild {
     INCLUDEPATH += $$BASEDIR/libs/lib/sdl2/msvc/include
 
     contains(QT_ARCH, i386) {
-        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x86/*.lib
+        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x86/SDL2main.lib
+        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x86/SDL2.lib
     } else {
-        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x64/*.lib
+        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x64/SDL2main.lib
+        LIBS += $$BASEDIR/libs/lib/sdl2/msvc/lib/x64/SDL2.lib
     }
 
     message("POTATOOOOOOOOO $$LIBS")
