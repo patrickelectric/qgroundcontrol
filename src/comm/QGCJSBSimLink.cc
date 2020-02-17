@@ -78,8 +78,7 @@ void QGCJSBSimLink::run()
 
     //connect(&refreshTimer, SIGNAL(timeout()), this, SLOT(sendUAVUpdate()));
     // Catch process error
-    connect(process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
-            this, &QGCJSBSimLink::processError);
+    connect(process, &QProcess::errorOccurred, this, &QGCJSBSimLink::processError);
 
     // Start Flightgear
     QStringList arguments;
@@ -330,8 +329,7 @@ bool QGCJSBSimLink::disconnectSimulation()
 {
     disconnect(_vehicle->uas(), &UAS::hilControlsChanged, this, &QGCJSBSimLink::updateControls);
     disconnect(this, &QGCJSBSimLink::hilStateChanged, _vehicle->uas(), &UAS::sendHilState);
-    disconnect(process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
-            this, &QGCJSBSimLink::processError);
+    disconnect(process, &QProcess::errorOccurred, this, &QGCJSBSimLink::processError);
 
     if (process)
     {
