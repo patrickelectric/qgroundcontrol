@@ -444,7 +444,7 @@ void QGCMapPolygon::offset(double distance)
         QGeoCoordinate  tangentOrigin = vertexCoordinate(0);
         for (int i=0; i<rgOffsetEdges.count(); i++) {
             int prevIndex = i == 0 ? rgOffsetEdges.count() - 1 : i - 1;
-            if (rgOffsetEdges[prevIndex].intersect(rgOffsetEdges[i], &newVertex) == QLineF::NoIntersection) {
+            if (rgOffsetEdges[prevIndex].intersects(rgOffsetEdges[i], &newVertex) == QLineF::NoIntersection) {
                 // FIXME: Better error handling?
                 qWarning("Intersection failed");
                 return;
