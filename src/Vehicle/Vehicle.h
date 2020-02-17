@@ -1477,7 +1477,7 @@ private:
     QTimer  _sendMultipleTimer;
     int     _nextSendMessageMultipleIndex;
 
-    QTime                           _flightTimer;
+    QElapsedTimer                   _flightTimer;
     QTimer                          _flightTimeUpdater;
     TrajectoryPoints*               _trajectoryPoints;
     QmlObjectListModel              _cameraTriggerPoints;
