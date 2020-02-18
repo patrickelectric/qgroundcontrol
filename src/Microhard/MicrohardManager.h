@@ -14,8 +14,8 @@
 #include "MicrohardSettings.h"
 #include "Fact.h"
 
+#include <QElapsedTimer>
 #include <QTimer>
-#include <QTime>
 
 class AppSettings;
 class QGCApplication;
@@ -111,5 +111,5 @@ private:
     QString            _encryptionKey;
     bool               _useCommunicationEncryptionKey = false;
     QString            _communicationEncryptionKey;
-    QTime              _timeoutTimer;
+    QElapsedTimer      _timeoutTimer;
 };
