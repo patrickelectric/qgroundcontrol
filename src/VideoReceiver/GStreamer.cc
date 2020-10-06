@@ -115,10 +115,18 @@ blacklist()
     }
 
     GstPluginFeature* plugin;
-
-    if ((plugin = gst_registry_lookup_feature(reg, "bcmdec")) != nullptr) {
+    plugin = gst_registry_lookup_feature(reg, "bcmdec");
+    if (plugin != nullptr) {
         qCCritical(GStreamerLog) << "Disable bcmdec";
         gst_plugin_feature_set_rank(plugin, GST_RANK_NONE);
+        gst_object_unref(plugin);
+    }
+
+    plugin = gst_registry_lookup_feature(reg, "avdec_h264");
+    if (plugin != nullptr) {
+        qCCritical(GStreamerLog) << "Downgrade avdec_h264 rank";
+        gst_plugin_feature_set_rank(plugin, GST_RANK_MARGINAL + 1);
+        gst_object_unref(plugin);
     }
 }
 
