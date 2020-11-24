@@ -683,6 +683,36 @@ GstVideoReceiver::_handleEOS(void)
     }
 }
 
+
+GstElement*
+GstVideoReceiver::_makeCapsFilter()
+{
+    GstElement* capsfilter = gst_element_factory_make("capsfilter", "capsfilter");
+
+    if (!capsfilter) {
+        qCCritical(VideoReceiverLog) << "gst_element_factory_make('capsfilter') failed";
+        return nullptr;
+    }
+
+    GstCaps* caps = gst_caps_new_simple("video/x-raw",
+        "format", G_TYPE_STRING, "I420", NULL);
+
+    if (!capsfilter) {
+        qCCritical(VideoReceiverLog) << "gst_element_factory_make('capsfilter') failed";
+        return nullptr;
+    }
+
+    if (!caps) {
+        qCCritical(VideoReceiverLog) << "gst_caps_new_simple failed";
+        return nullptr;
+    }
+
+    g_object_set(static_cast<gpointer>(capsfilter), "caps", caps, NULL);
+    gst_caps_unref(caps);
+
+    return capsfilter;
+}
+
 GstElement*
 GstVideoReceiver::_makeSource(const QString& uri)
 {
@@ -1068,6 +1098,21 @@ GstVideoReceiver::_addDecoder(GstElement* src)
         g_signal_connect(_decoder, "pad-added", G_CALLBACK(_onNewPad), this);
     }
 
+/*
+    GstElement* capsFilter = _makeCapsFilter();
+    if (!capsFilter) {
+        qCCritical(VideoReceiverLog) << "Failed to create capsfilter.";
+        return false;
+    }
+
+    gst_bin_add(GST_BIN(_pipeline), capsFilter);
+    gst_element_sync_state_with_parent(capsFilter);
+    if (!gst_element_link(_decoder, capsFilter)) {
+        qCCritical(VideoReceiverLog) << "Unable to link capsfilter";
+        return false;
+    }
+    gst_object_unref(capsFilter);*/
+
     return true;
 }
 
@@ -1079,6 +1124,13 @@ GstVideoReceiver::_addVideoSink(GstPad* pad)
     gst_object_ref(_videoSink); // gst_bin_add() will steal one reference
 
     gst_bin_add(GST_BIN(_pipeline), _videoSink);
+
+    /*
+    GstCaps* capssink = gst_caps_new_simple("video/x-raw",
+        "format", G_TYPE_STRING, "I420", NULL);
+
+    if(!gst_element_link_filtered(_decoder, _videoSink, capssink)) {
+        */
 
     if(!gst_element_link(_decoder, _videoSink)) {
         gst_bin_remove(GST_BIN(_pipeline), _videoSink);

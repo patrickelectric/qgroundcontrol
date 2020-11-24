@@ -102,6 +102,7 @@ protected slots:
     virtual void _handleEOS(void);
 
 protected:
+    virtual GstElement* _makeCapsFilter();
     virtual GstElement* _makeSource(const QString& uri);
     virtual GstElement* _makeDecoder(GstCaps* caps, GstElement* videoSink);
     virtual GstElement* _makeFileSink(const QString& videoFile, FILE_FORMAT format);
