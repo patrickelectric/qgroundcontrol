@@ -76,7 +76,7 @@ _vsb_sink_pad_query(GstPad* pad, GstObject* parent, GstQuery* query)
 {
     GstQgcVideoSinkBin *vsb;
     GstElement* element;
-    
+
     vsb = GST_QGC_VIDEO_SINK_BIN(parent);
 
     switch (GST_QUERY_TYPE(query)) {

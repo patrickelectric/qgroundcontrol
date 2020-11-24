@@ -134,12 +134,12 @@ blacklist()
 
     // Enable VAAPI drivers
     for(auto name : {"vaapimpeg2dec", "vaapimpeg4dec", "vaapih263dec", "vaapih264dec", "vaapivc1dec", "vaapidecodebin"}) {
-        //changeRank(name, GST_RANK_PRIMARY);
+        changeRank(name, GST_RANK_PRIMARY);
     }
 
     // Enable VDPAU drivers
     for(auto name : {"nvh265dec", "nvh265sldec", "nvh264dec", "nvh264sldec"}) {
-        //changeRank(name, GST_RANK_PRIMARY);
+        changeRank(name, GST_RANK_PRIMARY);
     }
 }
 
