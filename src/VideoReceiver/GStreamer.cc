@@ -108,17 +108,37 @@ static void qgcputenv(const QString& key, const QString& root, const QString& pa
 static void
 blacklist()
 {
-    GstRegistry* reg;
+    GstRegistry* registry = gst_registry_get();
 
-    if ((reg = gst_registry_get()) == nullptr) {
+    if (registry == nullptr) {
+        qCCritical(GStreamerLog) << "Failed to get gstreamer registry.";
         return;
     }
 
-    GstPluginFeature* plugin;
+    auto changeRank = [registry](const char* featureName, uint16_t rank) {
+        GstPluginFeature* feature = gst_registry_lookup_feature(registry, featureName);
+        if (feature == nullptr) {
+            qCWarning(GStreamerLog) << "Failed to change ranking of feature:" << featureName;
+            return;
+        }
 
-    if ((plugin = gst_registry_lookup_feature(reg, "bcmdec")) != nullptr) {
-        qCCritical(GStreamerLog) << "Disable bcmdec";
-        gst_plugin_feature_set_rank(plugin, GST_RANK_NONE);
+        qCInfo(GStreamerLog) << "Changing feature (" << featureName << ") to use rank:" << rank;
+        gst_plugin_feature_set_rank(feature, rank);
+        gst_registry_add_feature(registry, feature);
+        gst_object_unref(feature);
+    };
+
+    // Set rank for specific features
+    changeRank("bcmdec", GST_RANK_NONE);
+
+    // Enable VAAPI drivers
+    for(auto name : {"vaapimpeg2dec", "vaapimpeg4dec", "vaapih263dec", "vaapih264dec", "vaapivc1dec", "vaapidecodebin"}) {
+        changeRank(name, GST_RANK_PRIMARY);
+    }
+
+    // Enable NVIDIA's proprietary APIs for hardware video acceleration
+    for(auto name : {"nvh265dec", "nvh265sldec", "nvh264dec", "nvh264sldec"}) {
+        changeRank(name, GST_RANK_PRIMARY);
     }
 }
 
