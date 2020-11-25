@@ -876,8 +876,6 @@ GstVideoReceiver::_makeSource(const QString& uri)
 GstElement*
 GstVideoReceiver::_makeDecoder()
 {
-    Q_UNUSED(caps);
-
     GstElement* decoder = nullptr;
 
     do {
