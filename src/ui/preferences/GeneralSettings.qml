@@ -329,6 +329,20 @@ Rectangle {
 
                                 Item { width: 1; height: 1}
                                 FactCheckBox {
+                                    text:       qsTr("Enable VA-API video hardware decode.")
+                                    fact:       _videoSettings.vaapiHardwareDecode
+                                    visible:    !ScreenTools.isAndroid && !_videoAutoStreamConfig && _isGst && fact.visible
+                                }
+
+                                Item { width: 1; height: 1}
+                                FactCheckBox {
+                                    text:       qsTr("Enable NVIDIA's video hardware decode.")
+                                    fact:       _videoSettings.nvidiaHardwareDecode
+                                    visible:    !ScreenTools.isAndroid && !_videoAutoStreamConfig && _isGst && fact.visible
+                                }
+
+                                Item { width: 1; height: 1}
+                                FactCheckBox {
                                     text:       qsTr("Auto-Delete Saved Recordings")
                                     fact:       _videoSettings.enableStorageLimit
                                     visible:    _showSaveVideoSettings && fact.visible
