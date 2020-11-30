@@ -35,6 +35,8 @@ public:
     DEFINE_SETTINGFACT(streamEnabled)
     DEFINE_SETTINGFACT(disableWhenDisarmed)
     DEFINE_SETTINGFACT(lowLatencyMode)
+    DEFINE_SETTINGFACT(vaapiHardwareDecode)
+    DEFINE_SETTINGFACT(nvidiaHardwareDecode)
 
     Q_PROPERTY(bool     streamConfigured        READ streamConfigured       NOTIFY streamConfiguredChanged)
     Q_PROPERTY(QString  rtspVideoSource         READ rtspVideoSource        CONSTANT)

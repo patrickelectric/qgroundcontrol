@@ -128,6 +128,20 @@
     "longDesc":  "If this option is enabled, the rtpjitterbuffer is removed and the video sink is set to assynchronous mode, reducing the latency by about 200 ms.",
     "type":             "bool",
     "default":     false
+},
+{
+    "name": "vaapiHardwareDecode",
+    "shortDesc": "Enable VA-API hardware decode.",
+    "longDesc": "If this option is enabled, the VA-API (Video Acceleration API) features will be enabled with high priority.",
+    "type": "bool",
+    "default": true
+},
+{
+    "name": "nvidiaHardwareDecode",
+    "shortDesc": "Enable NVIDIA's proprietary APIs for hardware video acceleration.",
+    "longDesc": "If this option is enabled, the NVIDIA'S proprietary API features will be enabled with high priority.",
+    "type": "bool",
+    "default": true
 }
 ]
 }
