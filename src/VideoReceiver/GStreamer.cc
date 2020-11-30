@@ -131,6 +131,10 @@ change_plugins_rank(bool forceVAAPI, bool forceNVIDIA)
     // Set rank for specific features
     changeRank("bcmdec", GST_RANK_NONE);
 
+    if (forceVAAPI || forceNVIDIA) {
+        changeRank("avdec_h264", GST_RANK_MARGINAL + 1);
+    }
+
     // Enable VAAPI drivers
     if (forceVAAPI) {
         for (auto name : {"vaapimpeg2dec", "vaapimpeg4dec", "vaapih263dec", "vaapih264dec", "vaapivc1dec", "vaapidecodebin"}) {
