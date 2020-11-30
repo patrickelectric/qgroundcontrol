@@ -340,12 +340,6 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
     }
 #endif
 
-    // We need to set language as early as possible prior to loading on JSON files.
-    setLanguage();
-
-    _toolbox = new QGCToolbox(this);
-    _toolbox->setChildToolboxes();
-
     // Gstreamer debug settings
     int gstDebugLevel = 0;
     if (settings.contains(AppSettings::gstDebugLevelName)) {
@@ -354,12 +348,16 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 
 #if defined(QGC_GST_STREAMING)
     // Initialize Video Receiver
-    bool enableVAAPI = _toolbox->settingsManager()->videoSettings()->vaapiHardwareDecode()->rawValue().toBool();
-    bool enableNVIDIA = _toolbox->settingsManager()->videoSettings()->nvidiaHardwareDecode()->rawValue().toBool();
-    GStreamer::initialize(argc, argv, gstDebugLevel, enableVAAPI, enableNVIDIA);
+    GStreamer::initialize(argc, argv, gstDebugLevel);
 #else
     Q_UNUSED(gstDebugLevel)
 #endif
+
+    // We need to set language as early as possible prior to loading on JSON files.
+    setLanguage();
+
+    _toolbox = new QGCToolbox(this);
+    _toolbox->setChildToolboxes();
 
 #ifndef __mobile__
     _gpsRtkFactGroup = new GPSRTKFactGroup(this);

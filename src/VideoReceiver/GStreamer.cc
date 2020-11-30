@@ -106,7 +106,7 @@ static void qgcputenv(const QString& key, const QString& root, const QString& pa
 #endif
 
 static void
-change_plugins_rank(bool forceVAAPI, bool forceNVIDIA)
+blacklist()
 {
     GstRegistry* registry = gst_registry_get();
 
@@ -136,22 +136,18 @@ change_plugins_rank(bool forceVAAPI, bool forceNVIDIA)
     }
 
     // Enable VAAPI drivers
-    if (forceVAAPI) {
-        for (auto name : {"vaapimpeg2dec", "vaapimpeg4dec", "vaapih263dec", "vaapih264dec", "vaapivc1dec", "vaapidecodebin"}) {
-            changeRank(name, GST_RANK_PRIMARY);
-        }
+    for(auto name : {"vaapimpeg2dec", "vaapimpeg4dec", "vaapih263dec", "vaapih264dec", "vaapivc1dec", "vaapidecodebin"}) {
+        changeRank(name, GST_RANK_PRIMARY);
     }
 
     // Enable NVIDIA's proprietary APIs for hardware video acceleration
-    if (forceNVIDIA) {
-        for (auto name : {"nvh265dec", "nvh265sldec", "nvh264dec", "nvh264sldec"}) {
-            changeRank(name, GST_RANK_PRIMARY);
-        }
+    for(auto name : {"nvh265dec", "nvh265sldec", "nvh264dec", "nvh264sldec"}) {
+        changeRank(name, GST_RANK_PRIMARY);
     }
 }
 
 void
-GStreamer::initialize(int argc, char* argv[], int debuglevel, bool forceVAAPI, bool forceNVIDIA)
+GStreamer::initialize(int argc, char* argv[], int debuglevel)
 {
     qRegisterMetaType<VideoReceiver::STATUS>("STATUS");
 
@@ -218,7 +214,7 @@ GStreamer::initialize(int argc, char* argv[], int debuglevel, bool forceVAAPI, b
     gst_ios_post_init();
 #endif
 
-    change_plugins_rank(forceVAAPI, forceNVIDIA);
+    blacklist();
 
     /* the plugin must be loaded before loading the qml file to register the
      * GstGLVideoItem qml item
