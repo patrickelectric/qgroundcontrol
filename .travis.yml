@@ -145,11 +145,11 @@ install:
     fi
 
   - if [[ "${SPEC}" = "macx-clang" ]]; then
-        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-devel-1.18.1-x86_64.pkg
-        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-1.18.1-x86_64.pkg
-        for package in *.pkg ;
-          do sudo installer -verbose -pkg "$package" -target /
-        done
+        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-devel-1.18.1-x86_64.pkg;
+        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-1.18.1-x86_64.pkg;
+        for package in *.pkg;
+          do sudo installer -verbose -pkg "$package" -target / ;
+        done;
     fi
 
   - if [ "${SPEC}" = "macx-clang" ]; then
@@ -217,6 +217,7 @@ script:
         make -j$JOBS;
     else
         xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]});
+        curl --upload-file ${SHADOW_BUILD_DIR}/qgc-app/package/QGroundControl.*
     fi
   #- ccache -s
 
