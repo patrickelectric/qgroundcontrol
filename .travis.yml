@@ -145,9 +145,10 @@ install:
     fi
 
   - if [[ "${SPEC}" = "macx-clang" ]]; then
-        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-devel-1.18.1-x86_64.pkg;
         wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-1.18.1-x86_64.pkg;
-        for package in *.pkg; do sudo installer -verbose -pkg "$package" -target / done;
+        wget https://gstreamer.freedesktop.org/data/pkg/osx/1.18.1/gstreamer-1.0-devel-1.18.1-x86_64.pkg;
+        sudo installer -verbose -pkg gstreamer-1.0-1.18.1-x86_64.pkg -target /;
+        sudo installer -verbose -pkg gstreamer-1.0-devel-1.18.1-x86_64.pkg -target /;
     fi
 
   - if [ "${SPEC}" = "macx-clang" ]; then
