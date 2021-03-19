@@ -219,7 +219,7 @@ script:
         xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]});
     fi
   - if [[ "${SPEC}" = "macx-clang" && "${TRAVIS_PULL_REQUEST}" = "false" ]]; then
-        curl --upload-file ${SHADOW_BUILD_DIR}/qgc-app/package/QGroundControl.* ;
+        curl --upload-file ${SHADOW_BUILD_DIR}/package/QGroundControl.dmg;
     fi
   #- ccache -s
 
